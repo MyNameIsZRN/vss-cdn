@@ -1,0 +1,17 @@
+name: Build and verify
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: https://github.com/actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: https://github.com/actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Build, integration checks and installer
+        run: ./gradlew --no-daemon build distZip

@@ -1,0 +1,1 @@
+{"required":true,"package":"cn.mctogether.vsscdn.server.mixin","compatibilityLevel":"JAVA_21","mixins":["VssSendMixin"],"injectors":{"defaultRequire":1}}

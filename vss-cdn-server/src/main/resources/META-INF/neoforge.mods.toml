@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="vss_cdn_server"
+version="0.1.0-alpha.7"
+displayName="VSS CDN Server"
+description='''Publishes existing VSS terrain on an independent bridge TCP port.'''
+[[dependencies.vss_cdn_server]]
+modId="neoforge"
+type="required"
+versionRange="[21.1,)"
+side="SERVER"
+[[dependencies.vss_cdn_server]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1]"
+side="SERVER"
+[[dependencies.vss_cdn_server]]
+modId="lss"
+type="required"
+versionRange="[0.22,0.23)"
+ordering="AFTER"
+side="SERVER"
+[[mixins]]
+config="vsscdn-server.mixins.json"

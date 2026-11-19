@@ -1,0 +1,20 @@
+tasks.register('integrationTest', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'cn.mctogether.vsscdn.common.TransportIntegrationTest'
+}
+check.dependsOn integrationTest
+tasks.named('test') { enabled = false }
+tasks.register('smokeProbe', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'cn.mctogether.vsscdn.common.PlatformSmokeProbe'
+    doFirst {
+        def required = ['serverConfig', 'stateFile', 'httpBase']
+        required.each { name ->
+            if (!project.hasProperty(name)) throw new GradleException("Missing -P${name}; see docs/OPERATIONS.md")
+        }
+        args = required.collect { project.property(it).toString() } +
+                [project.findProperty('tcpHost')?.toString() ?: '127.0.0.1']
+    }
+}

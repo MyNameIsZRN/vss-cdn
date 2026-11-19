@@ -1,0 +1,32 @@
+plugins { id 'net.neoforged.moddev' version '2.0.148' apply false }
+allprojects {
+    group = 'cn.mctogether.vsscdn'
+    version = '0.1.0-alpha.7'
+    repositories { mavenCentral(); maven { url = 'https://repo.papermc.io/repository/maven-public/' } }
+}
+subprojects {
+    apply plugin: 'java-library'
+    java { toolchain.languageVersion = JavaLanguageVersion.of(21); withSourcesJar() }
+    tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+    tasks.withType(AbstractArchiveTask).configureEach { preserveFileTimestamps = false; reproducibleFileOrder = true }
+    tasks.named('jar') { from rootProject.file('LICENSE') }
+}
+tasks.register('dist', Copy) {
+    dependsOn ':vss-cdn-cilent:build', ':vss-cdn-server:build', ':vss-cdn-bridge:build'
+    from(subprojects.findAll { it.name != 'common' }.collect { it.layout.buildDirectory.dir('libs') }) { include '*.jar'; exclude '*-sources.jar' }
+    into layout.projectDirectory.dir('dist')
+}
+tasks.register('distZip', Zip) {
+    dependsOn 'dist'
+    archiveFileName = "vss-cdn-${project.version}-install.zip"
+    destinationDirectory = layout.projectDirectory.dir('dist')
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+    from(project(':vss-cdn-cilent').tasks.named('jar')) { into 'client/mods' }
+    from(project(':vss-cdn-server').tasks.named('jar')) { into 'server/mods' }
+    from(project(':vss-cdn-bridge').tasks.named('jar')) { into 'velocity/plugins' }
+    from('README.md', 'VERIFICATION.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'LICENSE')
+    from('docs') { into 'docs' }
+    from('examples') { into 'examples' }
+    from('tools/prepare_youer_vss.py') { into 'tools' }
+}

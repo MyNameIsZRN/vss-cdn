@@ -1,0 +1,14 @@
+base { archivesName = 'vss-cdn-bridge' }
+dependencies {
+    implementation project(':common')
+    if (project.hasProperty('velocityApiDir')) {
+        // Explicit opt-in for an offline SDK directory; clean clones use Maven.
+        compileOnly fileTree(rootProject.file(project.property('velocityApiDir'))) { include '*.jar' }
+    } else {
+        compileOnly 'com.velocitypowered:velocity-api:3.4.0-SNAPSHOT'
+        compileOnly 'com.google.inject:guice:6.0.0'
+        compileOnly 'org.slf4j:slf4j-api:2.0.9'
+    }
+}
+tasks.named('jar') { from project(':common').sourceSets.main.output }
+tasks.named('sourcesJar') { from project(':common').sourceSets.main.allSource }

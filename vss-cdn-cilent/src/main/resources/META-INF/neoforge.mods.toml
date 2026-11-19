@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="vss_cdn_client"
+version="0.1.0-alpha.7"
+displayName="VSS CDN Client"
+description='''Downloads VSS columns from CDN while keeping native VSS world, cache and renderer management.'''
+[[dependencies.vss_cdn_client]]
+modId="neoforge"
+type="required"
+versionRange="[21.1,)"
+side="CLIENT"
+[[dependencies.vss_cdn_client]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1]"
+side="CLIENT"
+[[dependencies.vss_cdn_client]]
+modId="lss"
+type="required"
+versionRange="[0.22,0.23)"
+ordering="AFTER"
+side="CLIENT"
+[[mixins]]
+config="vsscdn-client.mixins.json"

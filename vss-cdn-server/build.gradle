@@ -1,0 +1,11 @@
+apply plugin: 'net.neoforged.moddev'
+base { archivesName = 'vss-cdn-server-neoforge-1.21.1' }
+neoForge {
+    version = '21.1.266'
+    runs { server { server(); gameDirectory = file('run'); programArgument '--nogui' } }
+    mods { vss_cdn_server { sourceSet sourceSets.main; sourceSet project(':common').sourceSets.main } }
+}
+dependencies { implementation project(':common') }
+sourceSets.main.java.srcDir(rootProject.file('neoforge-shared/src/main/java'))
+tasks.named('jar') { from project(':common').sourceSets.main.output }
+tasks.named('sourcesJar') { from project(':common').sourceSets.main.allSource }

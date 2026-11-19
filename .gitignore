@@ -1,0 +1,9 @@
+.gradle/
+.gradle-home/
+.dev-libs/
+.local/
+**/build/
+**/run/
+dist/
+verification/*.log
+__pycache__/

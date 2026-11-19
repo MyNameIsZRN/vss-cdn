@@ -1,0 +1,17 @@
+apply plugin: 'net.neoforged.moddev'
+base { archivesName = 'vss-cdn-cilent-neoforge-1.21.1' }
+neoForge {
+    version = '21.1.266'
+    runs { client {
+        client(); gameDirectory = file('run')
+        if (project.hasProperty('testServer')) {
+            programArgument '--quickPlayMultiplayer'
+            programArgument project.property('testServer').toString()
+        }
+    } }
+    mods { vss_cdn_client { sourceSet sourceSets.main; sourceSet project(':common').sourceSets.main } }
+}
+dependencies { implementation project(':common') }
+sourceSets.main.java.srcDir(rootProject.file('neoforge-shared/src/main/java'))
+tasks.named('jar') { from project(':common').sourceSets.main.output }
+tasks.named('sourcesJar') { from project(':common').sourceSets.main.allSource }

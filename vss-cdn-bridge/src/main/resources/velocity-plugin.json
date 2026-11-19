@@ -1,0 +1,1 @@
+{"id":"vss-cdn-bridge","name":"VSS CDN Bridge","version":"0.1.0-alpha.7","description":"HTTP CDN origin with outbound authenticated backend routing and direct client CDN configuration","authors":["MCTogether"],"dependencies":[],"main":"cn.mctogether.vsscdn.bridge.VssCdnBridge"}
